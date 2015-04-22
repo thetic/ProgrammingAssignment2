@@ -5,21 +5,25 @@
 ## A square, invertible matrix is assumed.
 makeCacheMatrix <- function(x = matrix()) {
     
-    inv <- NULL
+    inv <- NULL  # initialize without inverse
     
+    # to change to stored matrix
     set <- function(y) {
         x <<- y
         inv <<- NULL
     }
     
+    # to retrieve the stored matrix
     get <- function() {
         x
     }
     
+    # to save the inverse
     setinverse <- function(inverse) {
         inv <<- inverse
     }
     
+    # to retrieve the inverse
     getinverse <- function() {
         inv
     }
@@ -36,13 +40,15 @@ makeCacheMatrix <- function(x = matrix()) {
 ## then returns the cached inverse on following calls
 cacheSolve <- function(x, ...) {
     inv <- x$getinverse()
-    if(!is.null(inv)) {
-        message("getting cached data")
-        return(inv)
+
+    if(!is.null(inv)) {  # if the inverse was already calculated
+        message("getting cached data") # get it
+        return(inv)  # we're done!
     }
-    data <- x$get()
-    inv <- solve(data)
-    x$setinverse(inv)
-    inv
+    # otherwise
+    data <- x$get()  # get the matrix
+    inv <- solve(data)  # invert it
+    x$setinverse(inv)  # save it
+    inv  # return it
   
 }
